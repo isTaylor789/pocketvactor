@@ -1,0 +1,20 @@
+# API
+fastapi
+uvicorn[standard]
+pydantic
+pydantic-settings
+
+# Tests
+httpx
+pytest
+
+# ML
+torch
+transformers
+sentence-transformers
+accelerate
+safetensors
+
+# Dev/calidad
+ruff
+mypy

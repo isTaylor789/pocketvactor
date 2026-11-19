@@ -1,0 +1,37 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Entornos virtuales
+env/
+.venv/
+venv/
+
+# Modelo local pesado
+model/*
+
+# Caches de herramientas
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+coverage.xml
+htmlcov/
+
+# Logs y runtime
+*.log
+server.log
+
+# Secretos
+.env
+.env.*
+!.env.example
+
+# Temporales / verificación local
+.tmp-tests/
+
+# Build
+build/
+dist/
+*.egg-info/
