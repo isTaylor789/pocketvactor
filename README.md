@@ -439,9 +439,23 @@ Comparación de `internal_batch_size` (modelo directo):
 | 32 | 127.5 ms | 501.9 |
 | 64 | 115.7 ms | 553.0 |
 
-VRAM aproximada: **2.46 GB en uso**, **1.6 GB del proceso server**, **660 MiB
-de pesos del modelo**. Los números son orientativos y dependen del driver, la
-versión de torch y la carga de la máquina.
+VRAM medida con `nvidia-smi` (RTX 3060 12 GB, bf16, `sdpa`, `internal_batch_size=32`):
+
+| Estado | VRAM del proceso server |
+|---|---:|
+| Idle (modelo cargado, sin requests) | **784 MiB** |
+| Tras inferencias (1–64 textos) | **~846 MiB** |
+
+El proceso incluye **~660 MiB de pesos en bf16** más contexto CUDA y workspaces
+de kernels. La VRAM **no crece con las requests**: se estanca en ~846 MiB porque
+el caching allocator de PyTorch retiene la memoria; no es una fuga. El total de
+la GPU ronda **~1.43–1.49 GB** incluyendo escritorio y overhead del driver.
+
+> ⚠️ Estas cifras son con pesos **bf16**. Con `float32` los pesos solos ocupan
+> ~1.3 GB, y con otras cuantizaciones del modelo la VRAM cambia. Los números
+> dependen del driver, la versión de torch y la carga de la máquina.
+>
+> Comparativa GPU vs CPU y más detalles: [`docs/PERF-gpu-vs-cpu.md`](docs/PERF-gpu-vs-cpu.md).
 
 ---
 
